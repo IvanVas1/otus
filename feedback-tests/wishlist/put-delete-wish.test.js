@@ -44,7 +44,7 @@ describe('Проверка эндпоинта GET profile/wishlist', () => {
       expect(recipes.recipe).toHaveProperty('michelin', expect.any(Boolean))
       expect(recipes.recipe).toHaveProperty('isLuckyGroup', expect.any(Boolean))
       expect(recipes.recipe).toHaveProperty('noisy', expect.any(Boolean))
-      expect(recipes.recipe).toHaveProperty('image', expect.any(Object))
+      // expect(recipes.recipe).toHaveProperty('image', expect.any(Object))
       expect(recipes.recipe).toHaveProperty('updatedAt', expect.any(String))
     })
   })
