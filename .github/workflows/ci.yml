@@ -21,7 +21,7 @@ jobs:
       - run: npm ci
       - run: npm run format:ci
 
-  smoke-tests:
+  test:
     runs-on: ubuntu-latest
 
     permissions:
@@ -42,40 +42,7 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: echo "${{secrets.ENV_FILE}}" >> .env
-      - run: npm run tests feedback-tests smoke
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: 'reports/jest-html'
-      - name: Deploy to Github Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-  regress-tests:
-    runs-on: ubuntu-latest
-    needs: [prettier, smoke-tests]
-
-    permissions:
-      id-token: write
-      contents: write
-      pages: write
-      actions: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20.11.0
-          cache: 'npm'
-      - run: npm ci
-      - run: echo "${{secrets.ENV_FILE}}" >> .env
-      - run: npm run tests feedback-tests regress
+      - run: npm test
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
