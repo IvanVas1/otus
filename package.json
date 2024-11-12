@@ -4,7 +4,6 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --verbose --runInBand",
-    "tests": "func() { jest --verbose --runInBand feedback-tests/testing-types/$2.test.js; }; func",
     "format": "prettier . --write",
     "format:ci": "prettier . --check"
   },
