@@ -1,0 +1,5 @@
+jest.requireActual('../likes/profile-likes.test')
+jest.requireActual('../likes/put-delete-likes.test')
+jest.requireActual('../wishlist/put-delete-wish.test')
+jest.requireActual('../wishlist/profile-wishlist.test')
+jest.requireActual('../feedback/add-feedback.test')
