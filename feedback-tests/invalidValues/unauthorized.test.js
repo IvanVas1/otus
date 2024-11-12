@@ -1,18 +1,18 @@
 import dotenv from 'dotenv'
-import { appReq, config, randomRecipe } from '../../agregator'
+import { appReq, config, getRandomRecipes } from '../../agregator'
 
 dotenv.config()
 
 const { baseFeedbackUrl, path } = config()
 
 let requests
-let randomRecipeId
+let singleRecipeId
 
 describe('Проверка неавторизованных запросов для feedback-service', () => {
   beforeAll(async () => {
     requests = new appReq(baseFeedbackUrl, null, path)
     const recipeList = await requests.getRecipesList(global.accessToken)
-    randomRecipeId = randomRecipe(recipeList.body.response)
+    singleRecipeId = getRandomRecipes(recipeList.body.response)
   })
 
   it('Unauthorized  POST /feedback', async () => {
@@ -34,7 +34,7 @@ describe('Проверка неавторизованных запросов д�
   })
 
   it('Unauthorized  PUT /profile/{id/}wishlist', async () => {
-    const response = await requests.putRecipesWish(null, randomRecipeId)
+    const response = await requests.putRecipesWish(null, singleRecipeId)
 
     expect(response.status).toBe(401)
     expect(response.body).toHaveProperty('type', expect.any(String))
@@ -43,7 +43,7 @@ describe('Проверка неавторизованных запросов д�
   })
 
   it('Unauthorized  delete /profile/{id/}wishlist', async () => {
-    const response = await requests.deleteRecipesWish(null, randomRecipeId)
+    const response = await requests.deleteRecipesWish(null, singleRecipeId)
 
     expect(response.status).toBe(401)
     expect(response.body).toHaveProperty('type', expect.any(String))
@@ -61,7 +61,7 @@ describe('Проверка неавторизованных запросов д�
   })
 
   it('Unauthorized  PUT /profile/{id/}likes', async () => {
-    const response = await requests.putRecipesLike(null, randomRecipeId)
+    const response = await requests.putRecipesLike(null, singleRecipeId)
 
     expect(response.status).toBe(401)
     expect(response.body).toHaveProperty('type', expect.any(String))
@@ -70,7 +70,7 @@ describe('Проверка неавторизованных запросов д�
   })
 
   it('Unauthorized  delete /profile/{id/}likes', async () => {
-    const response = await requests.deleteRecipesLike(null, randomRecipeId)
+    const response = await requests.deleteRecipesLike(null, singleRecipeId)
 
     expect(response.status).toBe(401)
     expect(response.body).toHaveProperty('type', expect.any(String))

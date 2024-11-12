@@ -21,7 +21,7 @@ jobs:
       - run: npm ci
       - run: npm run format:ci
 
-  test:
+  smoke-tests:
     runs-on: ubuntu-latest
 
     permissions:
@@ -42,7 +42,7 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: echo "${{secrets.ENV_FILE}}" >> .env
-      - run: npm test
+      - run: npm run tests feedback-tests smoke
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
@@ -52,3 +52,17 @@ jobs:
       - name: Deploy to Github Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  regress-tests:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.11.0
+          cache: 'npm'
+      - run: npm ci
+      - run: echo "${{secrets.ENV_FILE}}" >> .env
+      - run: npm run tests feedback-tests regress

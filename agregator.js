@@ -1,6 +1,6 @@
 import appReq from './src/app'
 import config from './framework/config'
-import { randomRecipe } from './framework/randomRecipe'
+import { getRandomRecipes } from './framework/randomRecipe'
 import getToken from './framework/getToken'
 
-export { appReq, config, randomRecipe, getToken }
+export { appReq, config, getRandomRecipes, getToken }
